@@ -71,7 +71,8 @@ class Binomial(Distribution):
         self.p = 1.0 * sum(self.data) / len(self.data)
         self.mean = self.calculate_mean()
         self.stdev = self.calculate_stdev()
-        return self.n, self.p
+
+        return self.p, self.n
 
 
 
@@ -85,9 +86,8 @@ class Binomial(Distribution):
         Returns:
             None
         """
-        x = [0, 1]
-		y = [self.data.count(0), self.data.count(1)]
 
+        plt.bar(x = ['0', '1'], height = [(1 - self.p) * self.n, self.p * self.n])
 
 
         # TODO: Use the matplotlib package to plot a bar chart of the data
@@ -101,7 +101,6 @@ class Binomial(Distribution):
         #       1 on the x-axis and 20 on the y-axis
 
         #       Make sure to label the chart with a title, x-axis label and y-axis label
-        plt.bar(x, y)
         plt.title('Bar Chart of Data')
         plt.xlabel('outcome')
         plt.ylabel('count')
@@ -118,7 +117,7 @@ class Binomial(Distribution):
             float: probability density function output
         """
 
-        nk = math.factorial(self.n) / (math.factorial(k) * math.factorial.(self.n - k))
+        nk = math.factorial(self.n) / (math.factorial(k) * math.factorial(self.n - k))
         return nk * (self.p ** k) * (1 - self.p) ** (self.n -k)
 
 
@@ -170,27 +169,13 @@ class Binomial(Distribution):
         except AssertionError as error:
             raise
 
-
-        # TODO: Define addition for two binomial distributions. Assume that the
-        # p values of the two distributions are the same. The formula for
-        # summing two binomial distributions with different p values is more complicated,
-        # so you are only expected to implement the case for two distributions with equal p.
-
-        # the try, except statement above will raise an exception if the p values are not equal
-
-        # Hint: You need to instantiate a new binomial object with the correct n, p,
-        #   mean and standard deviation values. The __add__ method should return this
-        #   new binomial object.
-
-        #   When adding two binomial distributions, the p value remains the same
-        #   The new n value is the sum of the n values of the two distributions.
         result = Binomial()
-		result.n = self.n + other.n
+        result.n = self.n + other.n
         result.p = self.p
         result.calculate_mean()
         result.calculate_stdev()
 
-		return result
+        return result
 
 
     def __repr__(self):
